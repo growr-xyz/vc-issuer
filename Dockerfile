@@ -11,9 +11,10 @@ COPY web3-api ./web3-api
 COPY vc-issuer ./vc-issuer
 COPY index.js .
 COPY package.json .
+COPY package-lock.json .
 COPY .env .
 
-RUN npm install
+RUN npm ci
 
 EXPOSE 4000
 

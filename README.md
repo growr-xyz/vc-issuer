@@ -3,7 +3,18 @@ Verifiable Credential Issuer, built using [RIdentity](https://www.rifos.org/iden
 
 Code is derived from [Bankathon backend](https://github.com/growr-xyz/growr-on-chain-backend).
 
-## Installation
+## Setting up environment
+
+create .env file
+
+```
+DB_HOST=mongodb
+DB_PORT=27017
+BANK_APP_KEY=<customer key for banco hipotecario sandbox>
+PRIVATE_KEY=<random 32 bytes>
+```
+
+**DB_HOST** should be `mongodb` if running in docker environment, or `localhost` if the Isser runs as local service
 
 ## Installation
 
