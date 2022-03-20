@@ -1,5 +1,5 @@
 # vc-issuer
-Verifiable Credential Issuer, built using RIdentity tools by RSK
+Verifiable Credential Issuer, built using [RIdentity](https://www.rifos.org/identity) tools
 
 Code is derived from [Bankathon backend](https://github.com/growr-xyz/growr-on-chain-backend).
 

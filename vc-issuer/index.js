@@ -23,7 +23,7 @@ class VCIssuer {
   async createRequest({ did, type, subject }) {
     const vr = await VerificationRequest.findOne({ did })
     if (!!vr) {
-      return vr
+      return vr.salt
     }
     const verificationRequest = new VerificationRequest({ did, type, subject })
     await verificationRequest.save()
