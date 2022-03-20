@@ -1,0 +1,31 @@
+version: "3"
+services:
+  app:
+    container_name: growr-vc-issuer
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - "4000:4000"
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    environment:
+      WAIT_HOSTS: mongodb:27017
+    networks:
+      - growr-network
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    volumes:
+      - ~/mongo:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - growr-network
+networks:
+  growr-network:
+    driver: bridge

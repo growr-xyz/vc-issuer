@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "c977b698-9deb-4c45-9310-80b079f34ea4",
+		"name": "VC Issuer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Request Verification",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.environment.set('salt', jsonData.data.requestVerification)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "    mutation requestVC {\n      requestVerification(did:\"did\", type:BANK_VC, username:\"Timo.Busd.01\")\n    }",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get VC",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var CryptoJS = require('crypto-js')",
+							"",
+							"const salt = pm.environment.get('salt')",
+							"const salted = CryptoJS.AES.encrypt('X!c9a49d53', salt);",
+							"pm.environment.set('salted', salted)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "    query bankVC($did: String, $message: String, $parameters: String) {\n      bankVC(did:$did, message:$message, parameters: $parameters)\n    }",
+						"variables": "{\n  \"parameters\": \"{{salted}}\",\n  \"did\": \"did\",\n  \"message\": \"dafdas\"\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
