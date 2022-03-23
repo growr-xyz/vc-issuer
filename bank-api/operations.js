@@ -25,7 +25,6 @@ const BankConnection = (host, key) => {
     },
 
     getCustomers: async () => {
-      // const user = await userModel.findOne({ wallet })
       const config = {
         method: 'get',
         url: `${apiHost}/obp/v4.0.0/users/current/customers`,
@@ -36,40 +35,26 @@ const BankConnection = (host, key) => {
       }
       const { customers } = (await (axios(config))).data
       const user = {}
-      console.log(customers)
-      user.fullName = customers[0]?.legal_name
-      user.dateOfBirth = customers[0]?.date_of_birth
-      user.maritalStatus = customers[0]?.relationship_status?.toUpperCase()
-      user.dependants = customers[0]?.dependants
-      user.education = customers[0]?.highest_education_attained
-      // await user.save()
-      // pubsub.publish('userTopic', { user: user._doc })
 
-      return customersDetails = customers.map(customer => {
+      console.log(customers)
+
+      user.dateOfBirth = customers[0]?.date_of_birth
+      user.relationshipStatus = customers[0]?.relationship_status?.toUpperCase()
+      user.dependants = { dependants: customers[0]?.dependants, dependantsDoB: customers[0]?.dob_of_dependants }
+      user.education = customers[0]?.highest_education_attained
+      user.employmentStatus = customers[0]?.employment_status
+      user.highestEducationAttained = customers[0]?.highest_education_attained
+      user.kycStatus = customers[0]?.kyc_status
+
+      user.creditScores = customers.map(customer => {
         return {
           bankId: customer.bank_id,
           creditRating: customer.credit_rating,
           creditLimit: customer.credit_limit
         }
       })
-      // userData.wallet = {
-      //   ...customersDetails
-      // }
-      // userData.address = wallet
-      // customersDetails.forEach(cd => {
-      //   pubsub.publish('bankTopic', {
-      //     bank: {
-      //       bankId: cd.bankId,
-      //       operation: 'EVALUATION',
-      //       success: true,
-      //       payload: JSON.stringify(cd)
-      //     }
-      //   })
-      // })
-      // pubsub.publish('commands', {
-      //   command: 'getUserAccounts'
-      // })
-      // return true
+      this.userData = user
+      return this.userData
     },
 
     getUserAccounts: async (bankId) => {

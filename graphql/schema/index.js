@@ -13,8 +13,14 @@ enum BankOperationsEnum {
 }
 
 enum VCTypeEnum {
-  BANK_VC,
-  FINHEALTH_VC
+  dateOfBirth
+  relationshipStatus
+  dependants
+  education
+  employmentStatus
+  highestEducationAttained
+  kycStatus
+  bankVCs
 }
 
 type BankMessage {
@@ -30,12 +36,11 @@ type Status {
 }
 
 type RootQuery {
-  bankVC(did: String, message: String, parameters: String): String
+  bankVC(did: String, message: String, type: VCTypeEnum, parameters: String): String
 }
 
 type RootMutation {
   requestVerification(did: String, type: VCTypeEnum, username: String): String
-  connectBank(username: String!, password: String!, wallet: String!): Status!
 }
 
 type Subscription {

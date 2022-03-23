@@ -39,6 +39,20 @@ mutation requestVC($did: String, $type: String, $subject: String) {
 }
 ```
 
+### Types
+
+Currently only atomic VC types are working:
+
+  - [x] dateOfBirth
+  - [x] relationshipStatus
+  - [ ] dependants
+  - [x] education
+  - [x] employmentStatus
+  - [x] highestEducationAttained
+  - [x] kycStatus
+  - [ ] bankVCs
+  - [ ] creditRating
+
 response should look like:
 
 ```json
@@ -49,7 +63,7 @@ response should look like:
 }
 ```
 
-Currently subject is used to pass BH username.
+Used to pass BH username.
 
 The `receivedVerification` value should be signed by the did and used as `message` parameter in the next query.
 Currently the `receivedVerification` value should be used to encrypt the password:
@@ -68,10 +82,21 @@ both signed `message` and AES generated `password` should be used in the followi
 1. Request VC
 
 ```graphql
-query bankVC($did: String, $message: String, $parameters: String) {
-	bankVC($did, $message, parameters: password)
+    query bankVC($did: String, $message: String, $type: VCTypeEnum, $parameters: String) {
+      bankVC(did:$did, message:$message, parameters: $parameters, type: $type)
+    }
 }
 
+```
+
+Response:
+
+```json
+{
+    "data": {
+        "bankVC": "eyJhbGciOiJFUzI1NksiLCJ0eXAiOiJKV1QifQ.eyJ2YyI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvMjAxOC9jcmVkZW50aWFscy92MSJdLCJ0eXBlIjpbIlZlcmlmaWFibGVDcmVkZW50aWFsIiwiRGF0ZU9mQmlydGgiXSwiY3JlZGVudGlhbFNjaGVtYSI6eyJpZCI6ImRpZDpldGhyOnJzazoweDZhMzAzNWVjMzEzN2JlZWI2Nzg5ZmZhOTA4OThjY2FkNWNkMDZmNzk7aWQ9MDkzZWNkOTgtNDJkMC00ZWZjLTg5NTAtZjhjYmYwZWFhZDM1O3ZlcnNpb249MS4wIiwidHlwZSI6Ikpzb25TY2hlbWFWYWxpZGF0b3IyMDE4In0sImNyZWRlbnRpYWxTdWJqZWN0Ijp7ImRhdGVPZkJpcnRoIjoiMjAyMS0xMS0xNyJ9fSwic3ViIjoiZGlkIiwibmJmIjoxNjQ4MDI4MjAwLCJpc3MiOiJkaWQ6ZXRocjpyc2s6MHg3RkRiYjFDQjNDMmVEMzU3NEMwNTg2Nzk5Y0NCMTRCRjE3MkE5RjEyIn0._nmmp_xrpcIZbeGG0uDEMnwGYFnrPAxjrULXmexehCQ3SGYwTrPp0Z77yOpGu1sb2-pEhn9UPpIX-wZSUFiZYA"
+    }
+}
 ```
 
 ## Flow
@@ -91,7 +116,7 @@ sequenceDiagram
 	note right of Peseta: see requestVC mutation
 	Issuer ->> Peseta: Response: Salt
 	Peseta ->> Issuer: Verify and get bank info
-	note right of Peseta: { did, signed(salt), salted(password) }
+	note right of Peseta: { did, signed(salt), salted(password), type }
 	Issuer ->> Issuer: Decode the signed salt
 	alt: did doesn't match the salt signer
 		Issuer ->> Peseta: Error

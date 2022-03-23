@@ -1,4 +1,5 @@
 require('dotenv').config()
+require('@growr/vc-json-schemas')
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
