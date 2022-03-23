@@ -25,7 +25,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "    mutation requestVC {\n      requestVerification(did:\"did\", type:BANK_VC, username:\"Timo.Busd.01\")\n    }",
+						"query": "    mutation requestVC {\n      requestVerification(did:\"did\", type: dateOfBirth, username:\"Timo.Busd.01\")\n    }",
 						"variables": ""
 					}
 				},
@@ -53,7 +53,7 @@
 							"var CryptoJS = require('crypto-js')",
 							"",
 							"const salt = pm.environment.get('salt')",
-							"const salted = CryptoJS.AES.encrypt('X!c9a49d53', salt);",
+							"const salted = CryptoJS.AES.encrypt('X!c9a49d53', salt).toString();",
 							"pm.environment.set('salted', salted)"
 						],
 						"type": "text/javascript"
@@ -66,8 +66,8 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "    query bankVC($did: String, $message: String, $parameters: String) {\n      bankVC(did:$did, message:$message, parameters: $parameters)\n    }",
-						"variables": "{\n  \"parameters\": \"{{salted}}\",\n  \"did\": \"did\",\n  \"message\": \"dafdas\"\n}"
+						"query": "    query bankVC($did: String, $message: String, $type: VCTypeEnum, $parameters: String) {\n      bankVC(did:$did, message:$message, parameters: $parameters, type: $type)\n    }",
+						"variables": "{\n  \"parameters\": \"{{salted}}\",\n  \"did\": \"did\",\n  \"message\": \"dafdas\",\n  \"type\": \"dateOfBirth\"\n}"
 					}
 				},
 				"url": {

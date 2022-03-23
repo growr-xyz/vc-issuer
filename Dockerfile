@@ -9,6 +9,7 @@ COPY model ./model
 COPY bank-api ./bank-api
 COPY web3-api ./web3-api
 COPY vc-issuer ./vc-issuer
+COPY vc-json-schemas ./vc-json-schemas
 COPY index.js .
 COPY package.json .
 COPY package-lock.json .
