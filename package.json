@@ -23,16 +23,20 @@
   "homepage": "https://github.com/growr-xyz/vc-issuer/blob/main/README.md",
   "dependencies": {
     "@growr/vc-json-schemas": "file:./vc-json-schemas",
+    "@growr/vc-json-schemas-parser": "file:vc-json-schemas-parser",
     "@rsksmart/rif-id-ethr-did": "^0.1.0",
     "axios": "^0.24.0",
     "body-parser": "^1.19.0",
     "crypto-js": "^4.1.1",
     "did-jwt-vc": "^2.1.9",
+    "did-resolver": "^2.1.2",
     "dotenv": "^10.0.0",
     "ethereumjs-util": "^7.1.4",
     "ethers": "^5.5.1",
+    "ethr-did-resolver": "^3.0.3",
     "express": "^4.17.1",
     "graphql-yoga": "^1.18.3",
+    "jesse-did-jwt": "^4.6.2",
     "mongoose": "^6.0.14"
   }
 }

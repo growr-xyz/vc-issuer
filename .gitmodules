@@ -1,3 +1,6 @@
 [submodule "vc-json-schemas"]
 	path = vc-json-schemas
 	url = git@github.com:growr-xyz/vc-json-schemas.git
+[submodule "vc-json-schemas-parser"]
+	path = vc-json-schemas-parser
+	url = git@github.com:growr-xyz/vc-json-schemas-parser.git

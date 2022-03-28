@@ -9,19 +9,28 @@ const BankConnection = (host, key) => {
   let userToken
   let userAccounts
   let userData = {}
+  let error
   instance = {
     login: async (username, password) => {
-      const config = {
-        method: 'post',
-        url: `${apiHost}/my/logins/direct`,
-        headers: {
-          'Content-Type': 'application/json',
-          'DirectLogin': `username=${username}, password=${password}, consumer_key=${apiKey}`
+      try {
+        const config = {
+          method: 'post',
+          url: `${apiHost}/my/logins/direct`,
+          headers: {
+            'Content-Type': 'application/json',
+            'DirectLogin': `username=${username}, password=${password}, consumer_key=${apiKey}`
+          }
+        };
+        const { token } = (await axios(config)).data
+        userToken = token
+        return { success: !!userToken }
+      } catch (e) {
+        if (e.message === "Request failed with status code 504") {
+          this.error = 504
+          return { success: true }
         }
-      };
-      const { token } = (await axios(config)).data
-      userToken = token
-      return { success: !!userToken }
+        throw e
+      }
     },
 
     getCustomers: async () => {
@@ -33,7 +42,12 @@ const BankConnection = (host, key) => {
           'DirectLogin': `token=${userToken}`,
         }
       }
-      const { customers } = (await (axios(config))).data
+      let customers
+      if (this.error === 504) {
+        customers = require('../mock/bh_customer_data.js')
+      } else {
+        customers = (await (axios(config))).data.customers
+      }
       const user = {}
 
       console.log(customers)

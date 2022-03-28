@@ -61,7 +61,7 @@ module.exports = {
     bankVC: async (_, { did, message, type, parameters }) => {
       try {
         const req = await verificationRequest.findOne({ did, type })
-        if (Object.entries(req).length === 0) throw new Error('Missing or expired request')
+        if (!req || Object.entries(req).length === 0) throw new Error('Missing or expired request')
         await validateDidSignature(did, req.salt, message)
         const password = decodePassword(req.salt, parameters)
         const bankConnection = BankConnection('https://obp-apisandbox.bancohipotecario.com.sv', '51wy4o0kvghivbbgbkmmfgmpb4nlu2x0qpdgagoj')
