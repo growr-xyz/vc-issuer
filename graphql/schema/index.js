@@ -21,6 +21,7 @@ enum VCTypeEnum {
   highestEducationAttained
   kycStatus
   bankVCs
+  citizenship
 }
 
 type BankMessage {

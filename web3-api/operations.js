@@ -7,7 +7,7 @@ let instance
 
 // TODO MAKE IT WORK WITH VERIFICATION REGISTRY
 // getLandingPool should go and become add verification
-
+  
 const RSKConnect = (host, key) => {
   const apiHost = host
   const apiKey = key

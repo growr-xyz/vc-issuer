@@ -7,7 +7,7 @@ const CryptoJS = require('crypto-js')
 
 const verificationRequest = require('../../model/verificationRequest');
 
-const allowedTypes = ['dateOfBirth', 'relationshipStatus', 'dependants', 'education', 'employmentStatus', 'highestEducationAttained', 'kycStatus', 'bankVCs']
+const allowedTypes = ['citizenship', 'dateOfBirth', 'relationshipStatus', 'dependants', 'education', 'employmentStatus', 'highestEducationAttained', 'kycStatus', 'bankVCs']
 
 const { VCIssuer } = require('../../vc-issuer')
 const issuer = new VCIssuer()
@@ -36,6 +36,7 @@ const typeTemplateMap = {
   highestEducationAttained: vcTemplates.createHighestEducationAttainedCredentialPayload,
   kycStatus: vcTemplates.createKYCStatusCredentialPayload,
   bankVCs: getAllVCs,
+  citizenship: vcTemplates.createCitizenshipCredentialPayload
 }
 
 const userDataTypeMap = {
@@ -60,6 +61,9 @@ module.exports = {
   RootQuery: {
     bankVC: async (_, { did, message, type, parameters }) => {
       try {
+        if (type === 'citizenship') {
+          return getVC({ citizenship: 'SV' }, did, type)
+        }
         const req = await verificationRequest.findOne({ did, type })
         if (!req || Object.entries(req).length === 0) throw new Error('Missing or expired request')
         await validateDidSignature(did, req.salt, message)

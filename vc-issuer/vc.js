@@ -42,7 +42,7 @@ const createDoBCredentialPayload = (
     "@context": ["https://www.w3.org/2018/credentials/v1"],
     type: ["VerifiableCredential", "DateOfBirth"],
     credentialSchema: {
-      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=093ecd98-42d0-4efc-8950-f8cbf0eaad35;version=1.0",
+      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=1ced84a4-559b-4d35-add2-f5484338e43f;version=1.0",
       type: "JsonSchemaValidator2018",
     },
     credentialSubject: { dateOfBirth },
@@ -59,7 +59,7 @@ const createBHCreditScoreCredentialPayload = (
     "@context": ["https://www.w3.org/2018/credentials/v1"],
     type: ["VerifiableCredential", "BHCreditScore"],
     credentialSchema: {
-      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=a2ef76b3-6d0e-4c75-a0f3-d45832554150;version=1.0",
+      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=093ecd98-42d0-4efc-8950-f8cbf0eaad35;version=1.0",
       type: "JsonSchemaValidator2018",
     },
     credentialSubject: { BHCredcreditScore },
@@ -76,7 +76,7 @@ const createDependantsCredentialPayload = (
     "@context": ["https://www.w3.org/2018/credentials/v1"],
     type: ["VerifiableCredential", "Dependants"],
     credentialSchema: {
-      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=0c9750ae-0327-4dce-af60-c9ccceb31791;version=1.0",
+      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=b89fbdb0-0083-48a3-ae7e-c8bb43b6f252;version=1.0",
       type: "JsonSchemaValidator2018",
     },
     credentialSubject: { Dependants },
@@ -93,7 +93,7 @@ const createEmploymentStatusCredentialPayload = (
     "@context": ["https://www.w3.org/2018/credentials/v1"],
     type: ["VerifiableCredential", "EmploymentStatus"],
     credentialSchema: {
-      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=854b49b2-c9d3-4069-adcf-098dec040f87;version=1.0",
+      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=7849b7ed-4bec-4e14-a58f-994cb5805d5a;version=1.0",
       type: "JsonSchemaValidator2018",
     },
     credentialSubject: { EmploymentStatus },
@@ -110,7 +110,7 @@ const createHighestEducationAttainedCredentialPayload = (
     "@context": ["https://www.w3.org/2018/credentials/v1"],
     type: ["VerifiableCredential", "HighestEducationAttained"],
     credentialSchema: {
-      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=bcde0260-c115-4075-90bc-84fdf5807f28;version=1.0",
+      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=afb0301f-5224-40a2-9383-8bbc75021a00;version=1.0",
       type: "JsonSchemaValidator2018",
     },
     credentialSubject: { HighestEducationAttained },
@@ -127,7 +127,7 @@ const createKYCStatusCredentialPayload = (
     "@context": ["https://www.w3.org/2018/credentials/v1"],
     type: ["VerifiableCredential", "KYCStatus"],
     credentialSchema: {
-      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=dbc19b34-e4c8-451b-9607-b56fbed6e1cb;version=1.0",
+      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=be7eaf37-9c05-4c24-a5d0-6a362e899690;version=1.0",
       type: "JsonSchemaValidator2018",
     },
     credentialSubject: { KYCStatus },
@@ -145,10 +145,27 @@ const createRelationshipStatusCredentialPayload = (
     "@context": ["https://www.w3.org/2018/credentials/v1"],
     type: ["VerifiableCredential", "RelationshipStatus"],
     credentialSchema: {
-      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=f0c50627-36cc-43e8-bc22-95506fde7ff2;version=1.0",
+      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=9afa929b-7718-4840-bf28-db27658c6704;version=1.0",
       type: "JsonSchemaValidator2018",
     },
     credentialSubject: { RelationshipStatus },
+  },
+});
+
+const createCitizenshipCredentialPayload = (
+  sub,
+  Citizenship
+) => ({
+  issuanceDate: new Date(),
+  sub,
+  vc: {
+    "@context": ["https://www.w3.org/2018/credentials/v1"],
+    type: ["VerifiableCredential", "Citizenship"],
+    credentialSchema: {
+      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=23730a1d-8f25-4c6a-b527-7f8ad901eea9;version=1.0",
+      type: "JsonSchemaValidator2018",
+    },
+    credentialSubject: { Citizenship },
   },
 });
 
@@ -162,5 +179,6 @@ module.exports = {
   createEmploymentStatusCredentialPayload,
   createHighestEducationAttainedCredentialPayload,
   createKYCStatusCredentialPayload,
-  createRelationshipStatusCredentialPayload
+  createRelationshipStatusCredentialPayload,
+  createCitizenshipCredentialPayload
 }

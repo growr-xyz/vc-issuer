@@ -19,8 +19,10 @@ PRIVATE_KEY=<random 32 bytes>
 ## Installation
 
 1. Clone this repo
-`$ git clone git@github.com:https://github.com/growr-xyz/vc-issuer`
-2. Build docker image
+`$ git clone git@github.com:https://github.com/growr-xyz/vc-issuer`, 
+	then initialise the submodules by running:
+`$ git submodule init` and `$ git submodule update`
+1. Build docker image
 `$ docker build --no-cache -t <docker-username>/<image-name>:<image-version> .`
 3. Run docker-compose build script
 `$ docker compose build`
