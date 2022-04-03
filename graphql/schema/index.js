@@ -42,6 +42,7 @@ type RootQuery {
 
 type RootMutation {
   requestVerification(did: String, type: VCTypeEnum, username: String): String
+  verifyVCs(did: String, vps: [String], pondAddress: String): Boolean
 }
 
 type Subscription {

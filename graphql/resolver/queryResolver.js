@@ -1,4 +1,3 @@
-// const RSKConnect = require('../../web3-api/operations')
 const BankConnection = require('../../bank-api/operations');
 
 const { verifyDid } = require('../../vc-issuer/ecrecover')
@@ -16,16 +15,11 @@ const vcTemplates = require('../../vc-issuer/vc')
 
 
 const validateDidSignature = (did, salt, message) => {
-  return Promise.resolve(true)
-  // TODO un-comment when we have front-end
-  const signer = verifyDid(salt, message)
-  if (getAccountFromDID(did) !== signer.toLowerCase()) {
-    throw new Error('Invalid signature')
-  }
-}
-
-const getAllVCs = (userData, did) => {
-
+  return Promise.resolve(true) // comment when debugging backend only
+  // const signer = verifyDid(salt, message)
+  // if (getAccountFromDID(did) !== signer.toLowerCase()) {
+  //   throw new Error('Invalid signature')
+  // }
 }
 
 const typeTemplateMap = {
@@ -35,17 +29,8 @@ const typeTemplateMap = {
   employmentStatus: vcTemplates.createEmploymentStatusCredentialPayload,
   highestEducationAttained: vcTemplates.createHighestEducationAttainedCredentialPayload,
   kycStatus: vcTemplates.createKYCStatusCredentialPayload,
-  bankVCs: getAllVCs,
+  // bankVCs: getAllVCs,
   citizenship: vcTemplates.createCitizenshipCredentialPayload
-}
-
-const userDataTypeMap = {
-  dateOfBirth: 'dateOfBirth',
-  relationshipStatus: 'relationshipStatus',
-  dependants: 'dependants',
-  employmentStatus: 'employmentStatus',
-  highestEducationAttained: 'highestEducationAttained',
-  kycStatus: 'kycStatus'
 }
 
 const getVC = async (userData, did, type) => {
@@ -56,22 +41,29 @@ const getVC = async (userData, did, type) => {
 const decodePassword = (salt, parameters) => {
   return bytes = CryptoJS.AES.decrypt(parameters, salt).toString(CryptoJS.enc.Utf8);;
 }
-
+// TODO refactor VC code in the issuer!!!
 module.exports = {
   RootQuery: {
     bankVC: async (_, { did, message, type, parameters }) => {
+      console.log(`=== Get VC type ${type} requested by ${did}`)
       try {
+        // TODO this is a HACK!!! refactor
         if (type === 'citizenship') {
           return getVC({ citizenship: 'SV' }, did, type)
         }
         const req = await verificationRequest.findOne({ did, type })
         if (!req || Object.entries(req).length === 0) throw new Error('Missing or expired request')
         await validateDidSignature(did, req.salt, message)
+        console.log(`* did ${did} validated`)
         const password = decodePassword(req.salt, parameters)
         const bankConnection = BankConnection('https://obp-apisandbox.bancohipotecario.com.sv', '51wy4o0kvghivbbgbkmmfgmpb4nlu2x0qpdgagoj')
+        console.log(`* bank connection successful`)
         await bankConnection.login(req.subject, password)
         const userData = await bankConnection.getCustomers()
-        return getVC(userData, did, req.type)
+        console.log(`* user ${did} data received`)
+        const vc = getVC(userData, did, req.type)
+        console.log(`* vc created ${vc}`)
+        return vc
       } catch (error) {
         return error;
       }

@@ -1,0 +1,231 @@
+[
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_verifier",
+				"type": "address"
+			}
+		],
+		"name": "addVerifier",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "getVerificationRecord",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "_verifier",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_object",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_subject",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_createdAt",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_expiryAt",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "getVerifier",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "_verifier",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_createdAt",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "_exists",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getVerifiersCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_subject",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_object",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_validity",
+				"type": "uint256"
+			}
+		],
+		"name": "registerVerification",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_verifier",
+				"type": "address"
+			}
+		],
+		"name": "removeVerifier",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_subject",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_object",
+				"type": "address"
+			}
+		],
+		"name": "revokeVerification",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_subject",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_object",
+				"type": "address"
+			}
+		],
+		"name": "validateVerification",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]

@@ -1,0 +1,263 @@
+[
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_verificationRegistry",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_wrbtc",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "addr",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "PondCreated",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "WRBTC",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "contract ERC20",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "minLoanAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "maxLoanAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "minLoanDuration",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "maxLoanDuration",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "annualInterestRate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "disbursmentFee",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "cashBackRate",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct Types.PondParams",
+				"name": "_params",
+				"type": "tuple"
+			},
+			{
+				"components": [
+					{
+						"internalType": "string[]",
+						"name": "names",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "types",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "contents",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "operators",
+						"type": "string[]"
+					}
+				],
+				"internalType": "struct Types.PondCriteriaInput",
+				"name": "_criteria",
+				"type": "tuple"
+			}
+		],
+		"name": "createPond",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getAllPonds",
+		"outputs": [
+			{
+				"internalType": "contract Pond[]",
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getAllPondsLength",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "getPond",
+		"outputs": [
+			{
+				"internalType": "contract Pond",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "getUserPond",
+		"outputs": [
+			{
+				"internalType": "contract Pond",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "getUserPonds",
+		"outputs": [
+			{
+				"internalType": "contract Pond[]",
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "getUserPondsLength",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "verificationRegistry",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]

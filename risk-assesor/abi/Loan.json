@@ -1,0 +1,275 @@
+[
+	{
+		"inputs": [
+			{
+				"internalType": "contract ERC20",
+				"name": "_token",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_duration",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_annualInterestRate",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_disbursmentFee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_cashBackRate",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [],
+		"name": "getDetails",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "contract ERC20",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "duration",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "annualInterestRate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "disbursmentFee",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "cashBackRate",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct Types.LoanParams",
+				"name": "_params",
+				"type": "tuple"
+			},
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "totalAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "totalInterest",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "repaidTotalAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "repaidInterestAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "installmentAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "installmentInterest",
+						"type": "uint256"
+					},
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "timestamp",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "interest",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "principal",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "total",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct Types.NextInstallment",
+						"name": "nextInstallment",
+						"type": "tuple"
+					}
+				],
+				"internalType": "struct Types.LoanReceipt",
+				"name": "_receipt",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "installmentAmount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "installmentInterest",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "issuedAt",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "pond",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "repaidInterestAmount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "repaidTotalAmount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "repay",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "_principal",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_interest",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "totalAmount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "totalInterest",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]

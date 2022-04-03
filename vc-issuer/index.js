@@ -18,6 +18,7 @@ class VCIssuer {
   }
 
   async createRequest({ did, type, subject }) {
+    console.log(` === Create request for VC type ${type} by did ${did} `)
     const vr = await VerificationRequest.findOne({ did, type })
     if (!!vr) {
       return vr.salt
@@ -25,50 +26,23 @@ class VCIssuer {
     const verificationRequest = new VerificationRequest({ did, type, subject })
     await verificationRequest.save()
     // TODO return by SMS or email as in the RSK issuer
+    console.log(`* VC request created`)
     return verificationRequest.salt
   }
 
-  verifySignature(did, code, sig) {
-    const msg = decorateVerificationCode(code)
-    const signer = ecrecover(msg, sig)
-    if (getAccountFromDID(did) !== signer.toLowerCase()) {
-      throw new Error('Invalid signature')
-    }
-  }
+  // verifySignature(did, code, sig) {
+  //   const msg = decorateVerificationCode(code)
+  //   const signer = ecrecover(msg, sig)
+  //   if (getAccountFromDID(did) !== signer.toLowerCase()) {
+  //     throw new Error('Invalid signature')
+  //   }
+  // }
 
   async createVC(did, subject, template) {
+    console.log(`* create VC from data and template`)
     const payload = template(did, subject)
     return createVerifiableCredentialJwt(payload, this.issuer)
   }
-
-
-
-
-  // async requestVerification(did, subject) {
-  //   const verificationRequest = await this.createRequest(did, subject)
-  //   return verificationRequest.code
-  // }
-
-  // async verify(did, sig) {
-  //   const verificationRequest = await this.getRequest(did)
-  //   if (verificationRequest.hasExpired()) {
-  //     throw new Error('Request has expired')
-  //   }
-
-  //   const { code, subject } = verificationRequest
-
-  //   this.verifySignature(did, code, sig)
-
-  //   const issuedVC = await this.findIssuedVC(did, subject)
-  //   if (issuedVC) {
-  //     return issuedVC.jwt
-  //   }
-
-  //   const jwt = await this.createVC(did, subject)
-  //   await this.saveVC(did, subject, jwt)
-
-  //   return jwt
-  // }
 
   async issueVC(did, subject, type, template) {
     const vc = await VC.findOne({ did, subject })
@@ -80,11 +54,3 @@ class VCIssuer {
 }
 
 module.exports = { VCIssuer }
-
-// dateOfBirth
-// relationshipStatus
-// dependants
-// education
-// employmentStatus
-// highestEducationAttained
-// kycStatus

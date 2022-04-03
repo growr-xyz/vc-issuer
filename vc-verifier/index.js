@@ -1,7 +1,7 @@
-import { Resolver } from 'did-resolver'
-import { getResolver } from 'ethr-did-resolver'
-import { verifyJWT, decodeJWT } from 'jesse-did-jwt'
-import { parseVerifiableCredential } from '@growr/vc-json-schemas-parser'
+const { Resolver } = require('did-resolver')
+const { getResolver } = require('ethr-did-resolver')
+const { verifyJWT } = require('jesse-did-jwt')
+const { parseVerifiableCredential } = require('@growr/vc-json-schemas-parser')
 
 const providerConfig = {
   networks: [
@@ -12,15 +12,22 @@ const providerConfig = {
 
 const resolver = new Resolver(getResolver(providerConfig))
 
-export const verifyVerifiableJwt = (jwt, ethSign = true) => {
+const verifyVerifiableJwt = (jwt, ethSign = true) => {
   // @ts-expect-error: resolver is incorrect type from did-jwt
   return verifyJWT(jwt, { ethSign, resolver })
 }
 
-export const decode = (jwt) => {
-  return decodeJWT(jwt)
+const getAddressFromDid = async (did) => {
+  const doc = await resolver.resolve(did)
+  return doc.publicKey[0].ethereumAddress
 }
 
-export const parseCredential = (type, payload) => {
+const parseCredential = (type, payload) => {
   return parseVerifiableCredential(type, payload)
+}
+
+module.exports = {
+  verifyVerifiableJwt,
+  parseCredential,
+  getAddressFromDid
 }

@@ -1,7 +1,7 @@
 version: "3"
 services:
   app:
-    container_name: growr-vc-issuer
+    container_name: growr-risk-assesor
     restart: always
     build:
       context: .
