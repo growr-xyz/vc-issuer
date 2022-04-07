@@ -68,7 +68,7 @@ const createBHCreditScoreCredentialPayload = (
 
 const createDependantsCredentialPayload = (
   sub,
-  Dependants
+  dependants
 ) => ({
   issuanceDate: new Date(),
   sub,
@@ -79,13 +79,13 @@ const createDependantsCredentialPayload = (
       id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=b89fbdb0-0083-48a3-ae7e-c8bb43b6f252;version=1.0",
       type: "JsonSchemaValidator2018",
     },
-    credentialSubject: { Dependants },
+    credentialSubject: { dependants },
   },
 });
 
 const createEmploymentStatusCredentialPayload = (
   sub,
-  EmploymentStatus
+  employmentStatus
 ) => ({
   issuanceDate: new Date(),
   sub,
@@ -96,13 +96,13 @@ const createEmploymentStatusCredentialPayload = (
       id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=7849b7ed-4bec-4e14-a58f-994cb5805d5a;version=1.0",
       type: "JsonSchemaValidator2018",
     },
-    credentialSubject: { EmploymentStatus },
+    credentialSubject: { employmentStatus },
   },
 });
 
 const createHighestEducationAttainedCredentialPayload = (
   sub,
-  HighestEducationAttained
+  highestEducationAttained
 ) => ({
   issuanceDate: new Date(),
   sub,
@@ -113,13 +113,13 @@ const createHighestEducationAttainedCredentialPayload = (
       id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=afb0301f-5224-40a2-9383-8bbc75021a00;version=1.0",
       type: "JsonSchemaValidator2018",
     },
-    credentialSubject: { HighestEducationAttained },
+    credentialSubject: { highestEducationAttained },
   },
 });
 
 const createKYCStatusCredentialPayload = (
   sub,
-  KYCStatus
+  kycStatus
 ) => ({
   issuanceDate: new Date(),
   sub,
@@ -130,14 +130,14 @@ const createKYCStatusCredentialPayload = (
       id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=be7eaf37-9c05-4c24-a5d0-6a362e899690;version=1.0",
       type: "JsonSchemaValidator2018",
     },
-    credentialSubject: { KYCStatus },
+    credentialSubject: { kycStatus },
   },
 });
 
 
 const createRelationshipStatusCredentialPayload = (
   sub,
-  RelationshipStatus
+  relationshipStatus
 ) => ({
   issuanceDate: new Date(),
   sub,
@@ -148,13 +148,13 @@ const createRelationshipStatusCredentialPayload = (
       id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=9afa929b-7718-4840-bf28-db27658c6704;version=1.0",
       type: "JsonSchemaValidator2018",
     },
-    credentialSubject: { RelationshipStatus },
+    credentialSubject: { relationshipStatus },
   },
 });
 
 const createCitizenshipCredentialPayload = (
   sub,
-  Citizenship
+  citizenship
 ) => ({
   issuanceDate: new Date(),
   sub,
@@ -165,7 +165,7 @@ const createCitizenshipCredentialPayload = (
       id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=23730a1d-8f25-4c6a-b527-7f8ad901eea9;version=1.0",
       type: "JsonSchemaValidator2018",
     },
-    credentialSubject: { Citizenship },
+    credentialSubject: { citizenship },
   },
 });
 
