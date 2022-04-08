@@ -68,7 +68,7 @@ const GrowrRiskAssesor = () => {
           const localNames = []
           localNames.push(...Object.keys(userCredentials[i]))
           for (const j of localNames) {
-            names.push(j)
+            names.push(decapitalizeFirstLetter(j))
             contents.push(userCredentials[i][j].text)
           }
         }

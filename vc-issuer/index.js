@@ -1,7 +1,7 @@
 const { createVerifiableCredentialJwt } = require('did-jwt-vc')
 const VerificationRequest = require('../model/verificationRequest')
 const VC = require('../model/vc')
-const { getAccountFromDID, createIssuerIdentity } = require('./did')
+const { createIssuerIdentity } = require('./did')
 const { ecrecover } = require('./ecrecover')
 
 class VCIssuer {
@@ -12,7 +12,7 @@ class VCIssuer {
       return VCIssuer.instance
     }
     VCIssuer.instance = this
-    this.issuer = createIssuerIdentity(process.env.PRIVATE_KEY, process.env.NETWORK_NAME || 'rsk');
+    this.issuer = createIssuerIdentity(process.env.PRIVATE_KEY, process.env.NETWORK_NAME || 'rsk:testnet');
     console.log(`Service DID: ${this.issuer.did}`);
     return this
   }

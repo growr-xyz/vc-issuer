@@ -5,6 +5,7 @@ const { parseVerifiableCredential } = require('@growr/vc-json-schemas-parser')
 
 const providerConfig = {
   networks: [
+    // { name: 'rsk:testnet', rpcUrl: 'https://localhost:8545', chainId: 31337 },
     { name: 'rsk:testnet', rpcUrl: 'https://did.testnet.rsk.co:4444', registry: '0xdca7ef03e98e0dc2b855be647c39abe984fcf21b' },
     { name: 'rsk', rpcUrl: 'https://did.rsk.co:4444', registry: '0xdca7ef03e98e0dc2b855be647c39abe984fcf21b' },
   ]
