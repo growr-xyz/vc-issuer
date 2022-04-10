@@ -119,9 +119,9 @@ const calculateAccountData = (transactionHistory) => {
   }
 
   return {
-    avgMonthlyIncome: (totalIncoming / 6).toFixed(2).toString(),
-    avgMonthlyRest: ((totalIncoming - totalOutgoing) / 6).toFixed(2).toString(),
-    savingPercent: (((totalIncoming - totalOutgoing) / totalIncoming) * 100).toFixed(2).toString()
+    avgMonthlyIncome: ((totalIncoming / 6).toFixed() < 0) ? 0 : Number((totalIncoming / 6).toFixed()),
+    avgMonthlyRest: (((totalIncoming - totalOutgoing) / 6).toFixed() < 0) ? 0 : Number(((totalIncoming - totalOutgoing) / 6).toFixed()),
+    savingPercent: ((((totalIncoming - totalOutgoing) / totalIncoming) * 100).toFixed() < 0) ? 0 : Number((((totalIncoming - totalOutgoing) / totalIncoming) * 100).toFixed())
   }
 }
 
