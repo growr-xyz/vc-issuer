@@ -2,8 +2,7 @@ const { VCIssuer } = require('../../vc-issuer')
 const { GrowrRiskAssesor } = require('../../risk-assesor')
 
 const issuer = new VCIssuer()
-const riskAssesor = GrowrRiskAssesor()
-riskAssesor.connectNetwork()
+
 
 module.exports = {
   RootMutation: {
@@ -14,6 +13,8 @@ module.exports = {
 
     verifyVCs: async (_, { did, vps, pondAddress }) => {
       try {
+        const riskAssesor = await GrowrRiskAssesor.getInstance()
+
         console.log(`=== Verify credentials for pond ${pondAddress} started by ${did}`)
         const userCredentials = await riskAssesor.getCredentials(did, vps)
         const verified = await riskAssesor.verifyCredentials(pondAddress, userCredentials)
