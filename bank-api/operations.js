@@ -36,7 +36,7 @@ const FinastraConnection = () => {
 
       console.log(`* customer :: ${customers}`)
       user.age = new AgeFromDateString(customers.dateOfBirth).age
-      user.kycStatus = !!(customers.coreIdentifications[0].idType === 'Personal')
+      user.hasKYC = !!(customers.coreIdentifications[0].idType === 'Personal')
       user.citizenship = customers.addresses[0].addressType === 'physical' ? customers.addresses[0].state : 'none'
       this.userData = user
       return this.userData
@@ -119,9 +119,9 @@ const calculateAccountData = (transactionHistory) => {
   }
 
   return {
-    averageMonthlyIncome: (totalIncoming / 6).toFixed(2).toString(),
-    averageMonthlyRest: ((totalIncoming - totalOutgoing) / 6).toFixed(2).toString(),
-    savingPercentage: (((totalIncoming - totalOutgoing) / totalIncoming) * 100).toFixed(2).toString()
+    avgMonthlyIncome: (totalIncoming / 6).toFixed(2).toString(),
+    avgMonthlyRest: ((totalIncoming - totalOutgoing) / 6).toFixed(2).toString(),
+    savingPercent: (((totalIncoming - totalOutgoing) / totalIncoming) * 100).toFixed(2).toString()
   }
 }
 

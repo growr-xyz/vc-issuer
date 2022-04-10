@@ -4,8 +4,8 @@ const VC = require('../model/vc')
 const { createIssuerIdentity } = require('./did')
 const { ecrecover } = require('./ecrecover')
 
-const allowedTypes = ['citizenship', 'dateOfBirth', 'relationshipStatus', 'dependants', 'education', 'employmentStatus', 'highestEducationAttained', 'kycStatus', 'bankVCs', 'age', 'averageMonthlyIncome', 'averageMonthlyRest', 'savingPercentage']
-const finastraTypes = ['age', 'kycStatus', 'citizenship', 'averageMonthlyIncome', 'averageMonthlyRest', 'savingPercentage']
+const allowedTypes = ['citizenship', 'dateOfBirth', 'relationshipStatus', 'dependants', 'education', 'employmentStatus', 'highestEducationAttained', 'kycStatus', 'hasKYC', 'bankVCs', 'age', 'avgMonthlyIncome', 'avgMonthlyRest', 'savingPercent']
+const finastraTypes = ['age', 'hasKYC', 'citizenship', 'avgMonthlyIncome', 'avgMonthlyRest', 'savingPercent']
 
 class VCIssuer {
   issuer

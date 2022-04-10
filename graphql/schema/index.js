@@ -19,9 +19,12 @@ enum VCTypeEnum {
   education
   employmentStatus
   highestEducationAttained
-  kycStatus
+  hasKYC
   bankVCs
   citizenship
+  avgMonthlyIncome
+  avgMonthlyRest
+  savingPercent
 }
 
 type BankMessage {

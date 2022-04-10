@@ -40,11 +40,12 @@ const typeTemplateMap = {
   employmentStatus: vcTemplates.createEmploymentStatusCredentialPayload,
   highestEducationAttained: vcTemplates.createHighestEducationAttainedCredentialPayload,
   kycStatus: vcTemplates.createKYCStatusCredentialPayload,
+  hasKYC: vcTemplates.createHasKYCCredentialPayload,
   citizenship: vcTemplates.createCitizenshipCredentialPayload,
   age: vcTemplates.createAgeCredentialPayload,
-  averageMonthlyIncome: vcTemplates.createAverageMonthlyIncomeCredentialPayload,
-  averageMonthlyRest: vcTemplates.createAverageMonthlyRestCredentialPayload,
-  savingPercentage: vcTemplates.createSavingPercentageCredentialPayload,
+  avgMonthlyIncome: vcTemplates.createAvgMonthlyIncomeCredentialPayload,
+  avgMonthlyRest: vcTemplates.createAvgMonthlyRestCredentialPayload,
+  savingPercent: vcTemplates.createSavingPercentCredentialPayload,
   bankVCs: getVC,
 }
 

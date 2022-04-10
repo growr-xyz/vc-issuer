@@ -134,6 +134,23 @@ const createKYCStatusCredentialPayload = (
   },
 });
 
+const createHasKYCCredentialPayload = (
+  sub,
+  hasKYC
+) => ({
+  issuanceDate: new Date(),
+  sub,
+  vc: {
+    "@context": ["https://www.w3.org/2018/credentials/v1"],
+    type: ["VerifiableCredential", "HasKYC"],
+    credentialSchema: {
+      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=c17df34e-104a-4eff-85e1-cc45e659b2dc;version=1.0",
+      type: "JsonSchemaValidator2018",
+    },
+    credentialSubject: { hasKYC },
+  },
+});
+
 
 const createRelationshipStatusCredentialPayload = (
   sub,
@@ -186,54 +203,54 @@ const createAgeCredentialPayload = (
   },
 });
 
-const createAverageMonthlyIncomeCredentialPayload = (
+const createAvgMonthlyIncomeCredentialPayload = (
   sub,
-  averageMonthlyIncome
+  avgMonthlyIncome
 ) => ({
   issuanceDate: new Date(),
   sub,
   vc: {
     "@context": ["https://www.w3.org/2018/credentials/v1"],
-    type: ["VerifiableCredential", "AverageMonthlyIncome"],
+    type: ["VerifiableCredential", "AvgMonthlyIncome"],
     credentialSchema: {
       id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=26c334d5-ee07-4dae-a789-05e3a6277d71;version=1.0",
       type: "JsonSchemaValidator2018",
     },
-    credentialSubject: { averageMonthlyIncome },
+    credentialSubject: { avgMonthlyIncome },
   },
 });
 
-const createAverageMonthlyRestCredentialPayload = (
+const createAvgMonthlyRestCredentialPayload = (
   sub,
-  averageMonthlyRest
+  avgMonthlyRest
 ) => ({
   issuanceDate: new Date(),
   sub,
   vc: {
     "@context": ["https://www.w3.org/2018/credentials/v1"],
-    type: ["VerifiableCredential", "AverageMonthlyRest"],
+    type: ["VerifiableCredential", "AvgMonthlyRest"],
     credentialSchema: {
       id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=e3a83116-c226-43ab-ab29-a647a1d2cb5e;version=1.0",
       type: "JsonSchemaValidator2018",
     },
-    credentialSubject: { averageMonthlyRest },
+    credentialSubject: { avgMonthlyRest },
   },
 });
 
-const createSavingPercentageCredentialPayload = (
+const createSavingPercentCredentialPayload = (
   sub,
-  savingPercentage
+  savingPercent
 ) => ({
   issuanceDate: new Date(),
   sub,
   vc: {
     "@context": ["https://www.w3.org/2018/credentials/v1"],
-    type: ["VerifiableCredential", "SavingPercentage"],
+    type: ["VerifiableCredential", "SavingPercent"],
     credentialSchema: {
       id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=606d0f64-83ef-4860-bd6a-a829eb75bb58;version=1.0",
       type: "JsonSchemaValidator2018",
     },
-    credentialSubject: { savingPercentage },
+    credentialSubject: { savingPercent },
   },
 });
 
@@ -246,10 +263,11 @@ module.exports = {
   createEmploymentStatusCredentialPayload,
   createHighestEducationAttainedCredentialPayload,
   createKYCStatusCredentialPayload,
+  createHasKYCCredentialPayload,
   createRelationshipStatusCredentialPayload,
   createCitizenshipCredentialPayload,
   createAgeCredentialPayload,
-  createAverageMonthlyIncomeCredentialPayload,
-  createAverageMonthlyRestCredentialPayload,
-  createSavingPercentageCredentialPayload
+  createAvgMonthlyIncomeCredentialPayload,
+  createAvgMonthlyRestCredentialPayload,
+  createSavingPercentCredentialPayload
 }
