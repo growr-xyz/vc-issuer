@@ -169,6 +169,73 @@ const createCitizenshipCredentialPayload = (
   },
 });
 
+const createAgeCredentialPayload = (
+  sub,
+  age
+) => ({
+  issuanceDate: new Date(),
+  sub,
+  vc: {
+    "@context": ["https://www.w3.org/2018/credentials/v1"],
+    type: ["VerifiableCredential", "Age"],
+    credentialSchema: {
+      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=031c9883-0f94-4d26-8fbd-c73aef407ce5;version=1.0",
+      type: "JsonSchemaValidator2018",
+    },
+    credentialSubject: { age },
+  },
+});
+
+const createAverageMonthlyIncomeCredentialPayload = (
+  sub,
+  averageMonthlyIncome
+) => ({
+  issuanceDate: new Date(),
+  sub,
+  vc: {
+    "@context": ["https://www.w3.org/2018/credentials/v1"],
+    type: ["VerifiableCredential", "AverageMonthlyIncome"],
+    credentialSchema: {
+      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=26c334d5-ee07-4dae-a789-05e3a6277d71;version=1.0",
+      type: "JsonSchemaValidator2018",
+    },
+    credentialSubject: { averageMonthlyIncome },
+  },
+});
+
+const createAverageMonthlyRestCredentialPayload = (
+  sub,
+  averageMonthlyRest
+) => ({
+  issuanceDate: new Date(),
+  sub,
+  vc: {
+    "@context": ["https://www.w3.org/2018/credentials/v1"],
+    type: ["VerifiableCredential", "AverageMonthlyRest"],
+    credentialSchema: {
+      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=e3a83116-c226-43ab-ab29-a647a1d2cb5e;version=1.0",
+      type: "JsonSchemaValidator2018",
+    },
+    credentialSubject: { averageMonthlyRest },
+  },
+});
+
+const createSavingPercentageCredentialPayload = (
+  sub,
+  savingPercentage
+) => ({
+  issuanceDate: new Date(),
+  sub,
+  vc: {
+    "@context": ["https://www.w3.org/2018/credentials/v1"],
+    type: ["VerifiableCredential", "SavingPercentage"],
+    credentialSchema: {
+      id: "did:ethr:rsk:0x6a3035ec3137beeb6789ffa90898ccad5cd06f79;id=606d0f64-83ef-4860-bd6a-a829eb75bb58;version=1.0",
+      type: "JsonSchemaValidator2018",
+    },
+    credentialSubject: { savingPercentage },
+  },
+});
 
 module.exports = {
   createDoBCredentialPayload,
@@ -180,5 +247,9 @@ module.exports = {
   createHighestEducationAttainedCredentialPayload,
   createKYCStatusCredentialPayload,
   createRelationshipStatusCredentialPayload,
-  createCitizenshipCredentialPayload
+  createCitizenshipCredentialPayload,
+  createAgeCredentialPayload,
+  createAverageMonthlyIncomeCredentialPayload,
+  createAverageMonthlyRestCredentialPayload,
+  createSavingPercentageCredentialPayload
 }

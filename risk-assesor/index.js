@@ -116,8 +116,6 @@ class GrowrRiskAssesor {
       throw e
     }
   }
-
-
 }
 
 module.exports = { GrowrRiskAssesor }

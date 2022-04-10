@@ -37,7 +37,7 @@ type Status {
 }
 
 type RootQuery {
-  bankVC(did: String, message: String, type: VCTypeEnum, parameters: String): String
+  bankVC(did: String, message: String, type: VCTypeEnum, parameters: String): [String]
 }
 
 type RootMutation {
