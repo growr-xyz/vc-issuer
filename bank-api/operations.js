@@ -121,7 +121,7 @@ const calculateAccountData = (transactionHistory) => {
   return {
     averageMonthlyIncome: (totalIncoming / 6).toFixed(2).toString(),
     averageMonthlyRest: ((totalIncoming - totalOutgoing) / 6).toFixed(2).toString(),
-    savingsPercent: (((totalIncoming - totalOutgoing) / totalIncoming) * 100).toFixed(2).toString()
+    savingsPercentage: (((totalIncoming - totalOutgoing) / totalIncoming) * 100).toFixed(2).toString()
   }
 }
 

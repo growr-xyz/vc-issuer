@@ -44,7 +44,7 @@ const typeTemplateMap = {
   age: vcTemplates.createAgeCredentialPayload,
   averageMonthlyIncome: vcTemplates.createAverageMonthlyIncomeCredentialPayload,
   averageMonthlyRest: vcTemplates.createAverageMonthlyRestCredentialPayload,
-  savingPercent: vcTemplates.createSavingPercentageCredentialPayload,
+  savingPercentage: vcTemplates.createSavingPercentageCredentialPayload,
   bankVCs: getVC,
 }
 
