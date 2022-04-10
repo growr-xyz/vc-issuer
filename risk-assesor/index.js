@@ -16,7 +16,7 @@ const GrowrRiskAssesor = () => {
   instance = {
     connectNetwork: () => {
       provider = new ethers.providers.JsonRpcProvider(process.env.NODE_HOST) //, { name: 'rsk-testnet', chainId: 31 });
-      const wallet = new ethers.Wallet(process.env.PRIVATE_KEY)
+      const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider)
       address = wallet.address
       signer = provider.getSigner(address);
       console.log(`=== Growr risk Assesor registred address: ${address}`)
