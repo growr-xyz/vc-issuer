@@ -17,7 +17,7 @@ const FinastraConnection = () => {
       return { success: !!userToken }
     },
 
-    getConsumer: async () => {
+    getConsumer: async (span) => {
       const config = {
         method: 'get',
         url: `https://api.fusionfabric.cloud/retail-us/me/v1/profile`,
@@ -42,7 +42,7 @@ const FinastraConnection = () => {
       return this.userData
     },
 
-    getUserAccounts: async () => {
+    getUserAccounts: async (span) => {
       const config = {
         method: 'get',
         url: `https://api.fusionfabric.cloud/retail-us/me/account/v1/accounts`,
@@ -56,7 +56,7 @@ const FinastraConnection = () => {
       return this.userData.userAccountIds
     },
 
-    getUserAccount: async (accountId) => {
+    getUserAccount: async (accountId, span) => {
       const config = {
         method: 'get',
         url: `https://api.fusionfabric.cloud/retail-us/me/account/v1/accounts/${accountId}`,
@@ -68,7 +68,7 @@ const FinastraConnection = () => {
       return (await axios(config)).data
     },
 
-    getUserTransferHistory: async (accountId) => {
+    getUserTransferHistory: async (accountId, span) => {
       const config = {
         method: 'get',
         url: `https://api.fusionfabric.cloud/retail-us/me/account/v1/accounts/${accountId}/transactions/`,
@@ -80,7 +80,7 @@ const FinastraConnection = () => {
       return (await axios(config)).data
     },
 
-    getCredentialsForMainAccount: (transferHistory) => {
+    getCredentialsForMainAccount: (transferHistory, span) => {
       this.userData = { ...this.userData, ...calculateAccountData(transferHistory) }
       return this.userData
     },

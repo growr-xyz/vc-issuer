@@ -1,3 +1,12 @@
+
+// try {
+//   const apm = require('elastic-apm-node').start({
+//     serviceName: 'apm-risk-assessor',
+//     serverUrl: 'http://localhost:8200'
+//   })
+// } catch (e) {
+//   console.error(e)
+// }
 require('dotenv').config()
 require('@growr/vc-json-schemas')
 const express = require('express');
@@ -24,4 +33,4 @@ const server = new GraphQLServer({
 });
 server.start(() => {
   console.log('GraphQL Listening on port 4000');
-});
+}); 

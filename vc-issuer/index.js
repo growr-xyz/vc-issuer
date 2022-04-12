@@ -3,10 +3,15 @@ const VerificationRequest = require('../model/verificationRequest')
 const VC = require('../model/vc')
 const { createIssuerIdentity } = require('./did')
 const { ecrecover } = require('./ecrecover')
+const { wrapSpanContext } = require('@opentelemetry/api/build/src/trace/spancontext-utils')
 
 const allowedTypes = ['citizenship', 'dateOfBirth', 'relationshipStatus', 'dependants', 'education', 'employmentStatus', 'highestEducationAttained', 'kycStatus', 'hasKYC', 'bankVCs', 'age', 'avgMonthlyIncome', 'avgMonthlyRest', 'savingPercent']
-const finastraTypes = ['age', 'hasKYC', 'citizenship', 'avgMonthlyIncome', 'avgMonthlyRest', 'savingPercent']
 
+const finastraTypes = ['age', 'hasKYC', 'citizenship', 'avgMonthlyIncome', 'avgMonthlyRest', 'savingPercent']
+const { context, setSpan } = require('@opentelemetry/api')
+const { getRPCMetadata, RPCType } = require('@opentelemetry/core');
+
+const { tracer } = require('../instrumentation-setup')
 class VCIssuer {
   issuer
 
@@ -21,6 +26,8 @@ class VCIssuer {
   }
 
   async createRequest({ did, type, subject }) {
+
+    const childSpan = tracer.startSpan('child')
     console.log(` === Create request for VC type ${type} by did ${did} `)
     const vr = await VerificationRequest.findOne({ did, type })
     if (!!vr) {
@@ -41,13 +48,13 @@ class VCIssuer {
   //   }
   // }
 
-  async createVC(did, subject, template) {
+  async createVC(did, subject, template, span) {
     console.log(`* create VC from data and template`)
     const payload = template(did, subject)
     return createVerifiableCredentialJwt(payload, this.issuer)
   }
 
-  async issueVC(did, subject, type, template) {
+  async issueVC(did, subject, type, template, span) {
     const vc = await VC.findOne({ did, subject })
     if (vc) return vc.jwt
     const jwt = await this.createVC(did, subject, template)

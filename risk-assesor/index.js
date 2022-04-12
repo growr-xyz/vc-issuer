@@ -19,7 +19,7 @@ class GrowrRiskAssesor {
     this.network = network
   }
 
-  static async getInstance() {
+  static async getInstance(span) {
     if (!this.instance) {
       this.instance = new GrowrRiskAssesor({ uri: process.env.NODE_HOST, options: { name: 'rsk-testnet', chainId: 31 } })
       this.instance.connectNetwork()
@@ -27,7 +27,7 @@ class GrowrRiskAssesor {
     return this.instance
   }
 
-  async connectNetwork() {
+  async connectNetwork(span) {
     this.provider = new ethers.providers.JsonRpcProvider(this.network.uri, this.network.options);
     this.wallet = new ethers.Wallet(process.env.PRIVATE_KEY, this.provider)
     this.address = this.wallet.address
@@ -42,7 +42,7 @@ class GrowrRiskAssesor {
     return this
   }
 
-  async getCredentials(did, vps) {
+  async getCredentials(did, vps, span) {
     console.log(`=== Get credentials from presentation for did ${did}`)
     const vpsDecodePromises = []
     vps.forEach(vp => vpsDecodePromises.push(verifyVerifiableJwt(vp)))
@@ -64,7 +64,7 @@ class GrowrRiskAssesor {
     return parsedCredentials
   }
 
-  async verifyCredentials(pondAddress, userCredentials) {
+  async verifyCredentials(pondAddress, userCredentials, span) {
 
     console.log(` === Start verifing presented credentials for pond ${pondAddress}`)
 
@@ -103,7 +103,7 @@ class GrowrRiskAssesor {
     return await Pond.verifyCredentials(userCredentialValues);
   }
 
-  async registerVerification(did, pondAddress, validity = 60 * 60) {
+  async registerVerification(did, pondAddress, span, validity = 60 * 60) {
     console.log(`=== Granting access to pond ${pondAddress} for user ${did}`)
     const VerificationRegistry = new ethers.Contract(VerificationRegistryAddress, VerificationRegistryABI, this.provider)
     const didAddress = await getAddressFromDid(did)

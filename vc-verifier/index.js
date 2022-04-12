@@ -13,17 +13,17 @@ const providerConfig = {
 
 const resolver = new Resolver(getResolver(providerConfig))
 
-const verifyVerifiableJwt = (jwt, ethSign = true) => {
+const verifyVerifiableJwt = (jwt, span, ethSign = true) => {
   // @ts-expect-error: resolver is incorrect type from did-jwt
   return verifyJWT(jwt, { ethSign, resolver })
 }
 
-const getAddressFromDid = async (did) => {
+const getAddressFromDid = async (did, span) => {
   const doc = await resolver.resolve(did)
   return doc.publicKey[0].ethereumAddress
 }
 
-const parseCredential = (type, payload) => {
+const parseCredential = (type, payload, span) => {
   return parseVerifiableCredential(type, payload)
 }
 
