@@ -13,8 +13,13 @@ module.exports = {
     requestVerification: async (_, { did, username, type = 'bankVCs' }) => {
       const parentSpan = tracer.startSpan('requestVerification')
       parentSpan.setAttribute('type', type)
+      console.log(parentSpan.spanContext())
       console.log(`=== Request verification type: ${type} by did: ${did}`)
-      const response = await issuer.createRequest({ did, type, subject: username }, parentSpan)
+      let response
+      tracer.startActiveSpan('newSpan', {}, context.with(parentSpan), async (span) => {
+        console.log(span.spanContext())
+        response = await issuer.createRequest(span, { did, type, subject: username })
+      })
       parentSpan.end()
       return response
     },

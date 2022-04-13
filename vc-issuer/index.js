@@ -25,9 +25,8 @@ class VCIssuer {
     return this
   }
 
-  async createRequest({ did, type, subject }) {
+  async createRequest(span, { did, type, subject }) {
 
-    const childSpan = tracer.startSpan('child')
     console.log(` === Create request for VC type ${type} by did ${did} `)
     const vr = await VerificationRequest.findOne({ did, type })
     if (!!vr) {
@@ -37,6 +36,7 @@ class VCIssuer {
     await verificationRequest.save()
     // TODO return by SMS or email as in the RSK issuer
     console.log(`* VC request created`)
+    span.end()
     return verificationRequest.salt
   }
 
