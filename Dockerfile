@@ -1,4 +1,6 @@
 FROM mhart/alpine-node:14
+RUN apk update
+RUN apk add git
 
 RUN mkdir -p /home/app
 
