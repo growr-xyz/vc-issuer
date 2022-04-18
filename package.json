@@ -6,7 +6,7 @@
   "scripts": {
     "start": "docker compose up mongodb -d & node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:trace": "OTEL_EXPORTER_OTLP_ENDPOINT=\"localhost:4317\" node -r ./tracing.js index.js"
+    "start:trace": "OTEL_EXPORTER_OTLP_ENDPOINT=\"localhost:4317\" OTEL_SERVICE_NAME=risk-assessor node -r ./tracing.js index.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "@growr/vc-json-schemas-parser": "file:./vc-json-schemas-parser",
     "@opentelemetry/api": "^1.0.4",
     "@opentelemetry/auto-instrumentations-node": "^0.28.0",
+    "@opentelemetry/context-async-hooks": "^1.0.1",
     "@opentelemetry/core": "^1.0.1",
     "@opentelemetry/exporter-otlp-grpc": "^0.26.0",
     "@opentelemetry/instrumentation-graphql": "^0.27.4",

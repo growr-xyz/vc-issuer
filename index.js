@@ -15,9 +15,19 @@ const mongoose = require('mongoose');
 const typeDefs = require('./graphql/schema/index');
 const resolvers = require('./graphql/resolver/index');
 const { GraphQLServer } = require('graphql-yoga');
+
+const { AsyncHooksContextManager } = require("@opentelemetry/context-async-hooks");
+const { api } = require('@opentelemetry/sdk-node');
+
+
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// const contextManager = new AsyncHooksContextManager();
+// contextManager.enable();
+// api.context.setGlobalContextManager(contextManager);
+
 const database = process.env.DB_URI ? process.env.DB_URI : `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/peseta`
 mongoose.connect(database)
   .then(() => {

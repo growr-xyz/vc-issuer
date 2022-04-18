@@ -3,15 +3,10 @@ const VerificationRequest = require('../model/verificationRequest')
 const VC = require('../model/vc')
 const { createIssuerIdentity } = require('./did')
 const { ecrecover } = require('./ecrecover')
-const { wrapSpanContext } = require('@opentelemetry/api/build/src/trace/spancontext-utils')
-
 const allowedTypes = ['citizenship', 'dateOfBirth', 'relationshipStatus', 'dependants', 'education', 'employmentStatus', 'highestEducationAttained', 'kycStatus', 'hasKYC', 'bankVCs', 'age', 'avgMonthlyIncome', 'avgMonthlyRest', 'savingPercent']
-
 const finastraTypes = ['age', 'hasKYC', 'citizenship', 'avgMonthlyIncome', 'avgMonthlyRest', 'savingPercent']
-const { context, setSpan } = require('@opentelemetry/api')
-const { getRPCMetadata, RPCType } = require('@opentelemetry/core');
 
-const { tracer } = require('../instrumentation-setup')
+const { startChildSpan } = require('../instrumentation-setup')
 class VCIssuer {
   issuer
 
@@ -25,7 +20,9 @@ class VCIssuer {
     return this
   }
 
-  async createRequest(span, { did, type, subject }) {
+  async createRequest({ did, type, subject }, parentSpan) {
+
+    const span = startChildSpan('createRequest', parentSpan)
 
     console.log(` === Create request for VC type ${type} by did ${did} `)
     const vr = await VerificationRequest.findOne({ did, type })
@@ -48,17 +45,33 @@ class VCIssuer {
   //   }
   // }
 
-  async createVC(did, subject, template, span) {
+  async createVC(did, subject, template, parentSpan) {
+    
+    const span = startChildSpan('createVC', parentSpan)
+
     console.log(`* create VC from data and template`)
     const payload = template(did, subject)
-    return createVerifiableCredentialJwt(payload, this.issuer)
+    span.addEvent('createVerifiableCredentialJwt_start')
+    const verifiableCredential = await createVerifiableCredentialJwt(payload, this.issuer)
+    span.addEvent('createVerifiableCredentialJwt_end')
+    span.end()
+    return verifiableCredential
   }
 
-  async issueVC(did, subject, type, template, span) {
+  async issueVC(did, subject, type, template, parentSpan) {
+
+    const span = startChildSpan('createVC', parentSpan)
+
     const vc = await VC.findOne({ did, subject })
-    if (vc) return vc.jwt
-    const jwt = await this.createVC(did, subject, template)
+    if (vc) {
+      span.addEvent('vc found')
+      span.end()
+      return vc.jwt
+    }
+    span.addEvent('vc has to be created')
+    const jwt = await this.createVC(did, subject, template, span)
     await VC.create({ did, subject, type, jwt })
+    span.end()
     return jwt
   }
 }

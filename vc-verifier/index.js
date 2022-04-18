@@ -13,7 +13,7 @@ const providerConfig = {
 
 const resolver = new Resolver(getResolver(providerConfig))
 
-const verifyVerifiableJwt = (jwt, span, ethSign = true) => {
+const verifyVerifiableJwt = (jwt, ethSign = true) => {
   // @ts-expect-error: resolver is incorrect type from did-jwt
   return verifyJWT(jwt, { ethSign, resolver })
 }

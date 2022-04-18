@@ -3,23 +3,18 @@ const { GrowrRiskAssesor } = require('../../risk-assesor')
 
 const issuer = new VCIssuer()
 
-const { context, getSpan } = require('@opentelemetry/api')
+const { context, trace, propagation, ROOT_CONTEXT } = require('@opentelemetry/api')
 
-const { tracer } = require('../../instrumentation-setup')
+const { tracer,  } = require('../../instrumentation-setup')
 const { setSpan } = require('@opentelemetry/api/build/src/trace/context-utils')
 
 module.exports = {
   RootMutation: {
     requestVerification: async (_, { did, username, type = 'bankVCs' }) => {
-      const parentSpan = tracer.startSpan('requestVerification')
+      const parentSpan = tracer.startSpan("requestVerification")
       parentSpan.setAttribute('type', type)
-      console.log(parentSpan.spanContext())
       console.log(`=== Request verification type: ${type} by did: ${did}`)
-      let response
-      tracer.startActiveSpan('newSpan', {}, context.with(parentSpan), async (span) => {
-        console.log(span.spanContext())
-        response = await issuer.createRequest(span, { did, type, subject: username })
-      })
+      const response = await issuer.createRequest({ did, type, subject: username }, parentSpan)  //, spanCtx) //, context.active(), spanCtx)
       parentSpan.end()
       return response
     },
@@ -28,6 +23,7 @@ module.exports = {
       try {
         const parentSpan = tracer.startSpan('verifyVCs')
         parentSpan.setAttribute('did', did)
+
         const riskAssesor = await GrowrRiskAssesor.getInstance(parentSpan)
 
         console.log(`=== Verify credentials for pond ${pondAddress} started by ${did}`)
@@ -37,6 +33,7 @@ module.exports = {
           throw new Error('User credentials does not match pond criteria')
         }
         await riskAssesor.registerVerification(did, pondAddress, parentSpan)
+        parentSpan.end()
         console.log(`* access granted`)
         return true
       } catch (e) {

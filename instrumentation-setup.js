@@ -5,9 +5,10 @@ const {
   BatchSpanProcessor
 
 } = require('@opentelemetry/sdk-trace-base');
-const opentelemetry = require('@opentelemetry/api');
+// const opentelemetry = require('@opentelemetry/api');
 
 const provider = new BasicTracerProvider();
+const { context, trace } = require('@opentelemetry/api')
 
 const { OTLPTraceExporter } = require('@opentelemetry/exporter-otlp-grpc');
 
@@ -16,8 +17,18 @@ provider.addSpanProcessor(new SimpleSpanProcessor(new OTLPTraceExporter()));
 provider.register();
 
 // This is what we'll access in all instrumentation code
-const tracer = opentelemetry.trace.getTracer(
+const tracer = trace.getTracer(
   'growr-risk-assessor'
 );
 
-module.exports = { tracer, provider }
+const startChildSpan = (type, parent, options = undefined) => {
+  const ctx = trace.setSpan(
+    context.active(),
+    parent
+  );
+
+  const span = tracer.startSpan(type, options, ctx);
+  return span
+}
+
+module.exports = { tracer, startChildSpan }

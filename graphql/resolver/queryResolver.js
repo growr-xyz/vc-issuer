@@ -11,23 +11,30 @@ const issuer = new VCIssuer()
 
 const vcTemplates = require('../../vc-issuer/vc')
 
-const { tracer } = require('../../instrumentation-setup')
+const { tracer, startChildSpan } = require('../../instrumentation-setup')
 
 const validateDidSignature = (did, salt, message, span) => {
   return Promise.resolve(true) // comment when debugging backend only
+
   // const signer = verifyDid(salt, message)
   // if (getAccountFromDID(did) !== signer.toLowerCase()) {
   //   throw new Error('Invalid signature')
   // }
 }
 
-const getVC = async (userData, did, type, span) => {
+const getVC = async (userData, did, type, parentSpan) => {
+  const span = startChildSpan('getVC', parentSpan)
+  span.setAttribute('type', type)
   if (!allowedTypes.includes(type)) throw new Error('VC type not supported')
   if (type === 'bankVCs') {
-    const vcs = finastraTypes.map(async type => getVC(userData, did, type))
-    return await Promise.all(vcs)
+    const vcs = finastraTypes.map(async type => getVC(userData, did, type, span))
+    const all = Promise.all(vcs)
+    span.end()
+    return all
   }
-  return issuer.issueVC(did, userData[type], type, typeTemplateMap[type])
+  const res = issuer.issueVC(did, userData[type], type, typeTemplateMap[type], span)
+  span.end()
+  return res
 }
 
 const decodePassword = (salt, parameters) => {
@@ -54,16 +61,19 @@ const typeTemplateMap = {
 module.exports = {
   RootQuery: {
     bankVC: async (_, { did, message, type, parameters }) => {
-      console.log(`=== Get VC type ${type} requested by ${did}`)
       const parentSpan = tracer.startSpan('bankVC')
+      console.log(`=== Get VC type ${type} requested by ${did}`)
       parentSpan.setAttribute('type', type)
       parentSpan.setAttribute('did', did)
       try {
         const req = await verificationRequest.findOne({ did, type })
         if (!req || Object.entries(req).length === 0) throw new Error('Missing or expired request')
-        await validateDidSignature(did, req.salt, message, )
+        await validateDidSignature(did, req.salt, message, parentSpan)
         console.log(`* did ${did} validated`)
+        parentSpan.addEvent('decodePassword_start')
         const token = decodePassword(req.salt, parameters)
+        parentSpan.addEvent('decodePassword_end')
+        parentSpan.addEvent('Finastra_data_start')
         const finastra = FinastraConnection()
         console.log(`* bank connection successful`)
         await finastra.setToken(token)
@@ -72,7 +82,8 @@ module.exports = {
         const transferHistory = await finastra.getUserTransferHistory(accounts[0])
         const userData = finastra.getCredentialsForMainAccount(transferHistory)
         console.log(`* user ${did} data received`)
-        const vc = getVC(userData, did, req.type)
+        parentSpan.addEvent('Finastra_data_start')
+        const vc = getVC(userData, did, req.type, parentSpan)
         console.log(`* vc created ${vc}`)
         parentSpan.end()
         return vc

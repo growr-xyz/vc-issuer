@@ -4,19 +4,22 @@
 
 const process = require('process');
 const opentelemetry = require('@opentelemetry/sdk-node');
-const { ExpressInstrumentation } = require('@opentelemetry/auto-instrumentations-node');
-const { GraphQLInstrumentation } = require('@opentelemetry/instrumentation-graphql')
+// const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node');
+// const { GraphQLInstrumentation } = require('@opentelemetry/instrumentation-graphql')
 const { OTLPTraceExporter } = require('@opentelemetry/exporter-otlp-grpc');
-// configure the SDK to export telemetry data to the console
-// enable all auto-instrumentations from the meta package
+
+const { AsyncHooksContextManager } = require("@opentelemetry/context-async-hooks");
+
+const api = opentelemetry.api
+
+// const contextManager = new AsyncHooksContextManager();
+// contextManager.enable();
+// api.context.setGlobalContextManager(contextManager);
+
 const traceExporter = new OTLPTraceExporter();
 const sdk = new opentelemetry.NodeSDK({
   traceExporter,
-  instrumentations: [new GraphQLInstrumentation({
-    // allowAttributes: true,
-    // depth: 2,
-    // mergeItems: true,
-  }),]
+  instrumentations: []
 });
 
 
