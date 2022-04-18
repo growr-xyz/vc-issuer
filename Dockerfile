@@ -4,6 +4,14 @@ RUN mkdir -p /home/app
 
 WORKDIR /home/app
 
+RUN git submodule init
+RUN git submodule update
+
+WORKDIR /home/app/vc-json-schemas-parser
+RUN npm run build
+
+WORKDIR /home/app
+
 COPY graphql ./graphql
 COPY model ./model
 COPY mock ./mock
