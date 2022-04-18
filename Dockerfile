@@ -16,7 +16,7 @@ COPY risk-assesor ./risk-assesor
 COPY index.js .
 COPY package.json .
 COPY package-lock.json .
-COPY .env .
+# COPY .env .
 
 RUN npm ci
 
