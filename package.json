@@ -4,8 +4,9 @@
   "description": "growr vc issuer for POC 2",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "docker compose up mongodb -d & node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:trace": "OTEL_EXPORTER_OTLP_ENDPOINT=\"localhost:4317\" OTEL_SERVICE_NAME=risk-assessor node -r ./tracing.js index.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,13 @@
   "dependencies": {
     "@growr/vc-json-schemas": "file:./vc-json-schemas",
     "@growr/vc-json-schemas-parser": "file:./vc-json-schemas-parser",
+    "@opentelemetry/api": "^1.0.4",
+    "@opentelemetry/auto-instrumentations-node": "^0.28.0",
+    "@opentelemetry/context-async-hooks": "^1.0.1",
+    "@opentelemetry/core": "^1.0.1",
+    "@opentelemetry/exporter-otlp-grpc": "^0.26.0",
+    "@opentelemetry/instrumentation-graphql": "^0.27.4",
+    "@opentelemetry/sdk-node": "^0.27.0",
     "@rsksmart/rif-id-ethr-did": "^0.1.0",
     "age-calculator": "^1.0.0",
     "axios": "^0.24.0",
@@ -34,6 +42,7 @@
     "did-jwt-vc": "^2.1.9",
     "did-resolver": "^2.1.2",
     "dotenv": "^10.0.0",
+    "elastic-apm-node": "^3.31.0",
     "ethereumjs-util": "^7.1.4",
     "ethers": "^5.5.1",
     "ethr-did-resolver": "^3.0.3",

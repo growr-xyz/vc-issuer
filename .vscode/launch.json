@@ -5,12 +5,33 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Launch via NPM",
+      "request": "launch",
+      "runtimeArgs": ["run", "start:trace"],
+      "runtimeExecutable": "npm",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node"
+    },
+
+    {
+      "name": "Launch calc",
+      "program": "${workspaceFolder}/calc.js",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node"
+    },
+    {
+      "name": "parse test",
+      "program": "${workspaceFolder}/parsetest.js",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node"
+    },
+    {
       "type": "pwa-node",
       "request": "launch",
-      "name": "Launch Program",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
+      "name": "Launch Program ",
+      "skipFiles": ["<node_internals>/**"],
       "program": "${workspaceFolder}/index.js"
     }
   ]

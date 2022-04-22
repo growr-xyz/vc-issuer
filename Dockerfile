@@ -1,6 +1,16 @@
 FROM mhart/alpine-node:14
+RUN apk update
+RUN apk add git
 
 RUN mkdir -p /home/app
+
+WORKDIR /home/app
+
+RUN git submodule init
+RUN git submodule update
+
+WORKDIR /home/app/vc-json-schemas-parser
+RUN npm run build
 
 WORKDIR /home/app
 
@@ -16,7 +26,7 @@ COPY risk-assesor ./risk-assesor
 COPY index.js .
 COPY package.json .
 COPY package-lock.json .
-COPY .env .
+# COPY .env .
 
 RUN npm ci
 

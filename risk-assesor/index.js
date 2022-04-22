@@ -4,6 +4,7 @@ const PondABI = require('./abi/Pond.json')
 const VerificationRegistryABI = require('./abi/VerificationRegistry.json')
 
 const VerificationRegistryAddress = process.env.VERIFICATION_REGISTRY_ADDRESS
+const { startChildSpan } = require('../instrumentation-setup')
 
 
 class GrowrRiskAssesor {
@@ -27,7 +28,8 @@ class GrowrRiskAssesor {
     return this.instance
   }
 
-  async connectNetwork() {
+  async connectNetwork(parentSpan) {
+    const span = startChildSpan('connectNetwork', parentSpan)
     this.provider = new ethers.providers.JsonRpcProvider(this.network.uri, this.network.options);
     this.wallet = new ethers.Wallet(process.env.PRIVATE_KEY, this.provider)
     this.address = this.wallet.address
@@ -39,20 +41,30 @@ class GrowrRiskAssesor {
       * balance: ${balance}
       * chainId: ${chainId}
     `)
+    span.end()
     return this
   }
 
-  async getCredentials(did, vps) {
+  async getCredentials(did, vps, parentSpan) {
+    const span = startChildSpan('getCredentials', parentSpan)
     console.log(`=== Get credentials from presentation for did ${did}`)
     const vpsDecodePromises = []
+    const childSpan1 = startChildSpan('Verify_presentation_promise', span)
     vps.forEach(vp => vpsDecodePromises.push(verifyVerifiableJwt(vp)))
     const verified = await Promise.all(vpsDecodePromises).catch(e => { throw e })
+    childSpan1.end()
     console.log('* presentation valid')
+    const childSpan2 = startChildSpan('Verify_credentials_promise', span)
     const vcValues = verified.map(v => v.payload.vp.verifiableCredential)
     const vcsDecodePromises = []
     vcValues.forEach(vc => vcsDecodePromises.push(verifyVerifiableJwt(vc[0], false)))
-    const credentials = await Promise.all(vcsDecodePromises).catch(e => { throw e })
+    const credentials = await Promise.all(vcsDecodePromises).catch(e => {
+      throw e
+    })
+    childSpan2.end()
     console.log('* credentials validated')
+
+    const childSpan3 = startChildSpan('Parse_credentials', span)
     const parsedCredentials = credentials.map(cr => {
       // if (cr.payload.iss !== issuer.issuer.did) throw new Error('Issuer unknown')
       // if (cr.payload.subject !== did) throw new Error('DID and VC subject do not match')
@@ -61,10 +73,13 @@ class GrowrRiskAssesor {
     console.log(`* credentials parsed
       ${JSON.stringify(parsedCredentials, null, 2)}
     `)
+    childSpan3.end()
+    span.end()
     return parsedCredentials
   }
 
-  async verifyCredentials(pondAddress, userCredentials) {
+  async verifyCredentials(pondAddress, userCredentials, parentSpan) {
+    const span = startChildSpan('verifyCredentials', parentSpan)
 
     console.log(` === Start verifing presented credentials for pond ${pondAddress}`)
 
@@ -94,21 +109,39 @@ class GrowrRiskAssesor {
     }
 
     const Pond = new ethers.Contract(pondAddress, PondABI, this.provider);
+
+    const childSpan1 = startChildSpan('get_criteriaNames', span)
+    span.addEvent('get_criteriaNames_start')
     const criteriaNames = await Pond.getCriteriaNames();
-    if (!userHasMatchingCredentials(userCredentials, criteriaNames)) { throw new Error('User credentials does not match pond requirements') }
+    childSpan1.end()
+    if (!userHasMatchingCredentials(userCredentials, criteriaNames)) {
+      span.end()
+      throw new Error('User credentials does not match pond requirements')
+    }
+
+    const childSpan2 = startChildSpan('pond_verify_credentials', span)
+
     const userCredentialValues = createUserCredentialValues(userCredentials)
     console.log(`* user credential vales to pass to Pond
         ${JSON.stringify(userCredentialValues, null, 2)}
       `)
-    return await Pond.verifyCredentials(userCredentialValues);
+    const result = await Pond.verifyCredentials(userCredentialValues);
+    childSpan2.end()
+    span.end()
+    return result
   }
 
-  async registerVerification(did, pondAddress, validity = 60 * 60) {
+  async registerVerification(did, pondAddress, parentSpan, validity = 60 * 60) {
+
+    const span = startChildSpan('registerVerification', parentSpan)
+
     console.log(`=== Granting access to pond ${pondAddress} for user ${did}`)
     const VerificationRegistry = new ethers.Contract(VerificationRegistryAddress, VerificationRegistryABI, this.provider)
     const didAddress = await getAddressFromDid(did)
     try {
       const tx = await VerificationRegistry.connect(this.wallet).registerVerification(didAddress, pondAddress, validity);
+      span.addEvent(`got tx :: ${(new Date()).toISOString()}`)
+      span.end()
       return tx.wait();
     } catch (e) {
       console.error(e)
