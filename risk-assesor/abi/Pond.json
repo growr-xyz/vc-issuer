@@ -159,6 +159,13 @@
 	},
 	{
 		"inputs": [],
+		"name": "activate",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "active",
 		"outputs": [
 			{
@@ -228,6 +235,13 @@
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "deactivate",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -251,6 +265,26 @@
 		"name": "depositRBTC",
 		"outputs": [],
 		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "destroy",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "factory",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -381,6 +415,11 @@
 				"internalType": "uint256",
 				"name": "_totalInterest",
 				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "_active",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
