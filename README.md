@@ -5,12 +5,12 @@ Code is derived from [Bankathon backend](https://github.com/growr-xyz/growr-on-c
 
 ## Setting up environment
 
-1. If local node is used, run, deploy and seed contracts from [core protocol repo](https://github.com/growr-xyz/growr-core-protocol/tree/feature/pond-v1)
+1. If local node is used, run, deploy and seed contracts from [core protocol repo](https://github.com/growr-xyz/growr-core-protocol/)
 	#### NOTE
 		Add Verifier identity in the deploy and seed [script](https://github.com/growr-xyz/growr-core-protocol/blob/7063b6e8fc9668c3281e13a206232eebf83379c6/scripts/dev/deploy-and-seed.js#L51).
 		To 
 
-2. This should work with Peseta app *TODO add correct repo when done*
+2. This should work with [SSFI demo app](https://github.com/growr-xyz/growr-ssfi-agent-app)
 
 ### create .env file
 
@@ -19,7 +19,7 @@ example .env file
 ```
 DB_HOST=mongodb
 DB_PORT=27017
-BANK_APP_KEY=<customer key for banco hipotecario sandbox>
+BANK_APP_KEY=null
 PRIVATE_KEY=<random 32 bytes>
 VERIFICATION_REGISTRY_ADDRESS=<address of the Verification Registry contract>
 NODE_HOST=<host of the node>
