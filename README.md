@@ -29,6 +29,8 @@ NODE_HOST=<host of the node>
 **DB_HOST** should be `mongodb` if running in docker environment, or `localhost` if the Isser runs as local service
 **PRIVATE_KEY** is used to create Issuer identity and Risk Assesor contract
 
+Note: Current version of Growr protocol in RSK testnet is 0.3:
+- VerificationRegistry    : 0xA05A7F9f6aA39d37f3fcE95D4A4ad5D273c0Db6C
 
 ## Installation
 
