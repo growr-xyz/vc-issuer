@@ -37,7 +37,6 @@ class GrowrRiskAssesor {
     console.log(`
     === RISK ASSESOR
       * balance: ${balance}
-      * address: ${a}
       * chainId: ${chainId}
     `)
     return this
@@ -116,8 +115,6 @@ class GrowrRiskAssesor {
       throw e
     }
   }
-
-
 }
 
 module.exports = { GrowrRiskAssesor }

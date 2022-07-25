@@ -26,6 +26,7 @@
     "@growr/vc-json-schemas": "file:./vc-json-schemas",
     "@growr/vc-json-schemas-parser": "file:./vc-json-schemas-parser",
     "@rsksmart/rif-id-ethr-did": "^0.1.0",
+    "age-calculator": "^1.0.0",
     "axios": "^0.24.0",
     "body-parser": "^1.19.0",
     "crypto-js": "^4.1.1",

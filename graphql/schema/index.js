@@ -19,9 +19,12 @@ enum VCTypeEnum {
   education
   employmentStatus
   highestEducationAttained
-  kycStatus
+  hasKYC
   bankVCs
   citizenship
+  avgMonthlyIncome
+  avgMonthlyRest
+  savingPercent
 }
 
 type BankMessage {
@@ -37,7 +40,7 @@ type Status {
 }
 
 type RootQuery {
-  bankVC(did: String, message: String, type: VCTypeEnum, parameters: String): String
+  bankVC(did: String, message: String, type: VCTypeEnum, parameters: String): [String]
 }
 
 type RootMutation {

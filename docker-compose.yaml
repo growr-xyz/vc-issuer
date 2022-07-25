@@ -1,5 +1,22 @@
 version: "3"
 services:
+  # chain:
+  #   container_name: growr-core
+  #   hostname: chain
+  #   restart: "always"
+  #   image: madgrowr/growr-core-container:0.0.2
+  #   ports:
+  #     - "8545:8545"
+  #   networks:
+  #     - growr-network
+  # deploy-protocol:
+  #   image: madgrowr/growr-core-container:0.0.2
+  #   depends_on:
+  #     - chain
+  #   restart: "no"
+  #   entrypoint: [ "sh", "-c", "npm run script:dev:deploy-and-seed-docker"]  
+  #   networks:
+  #     - growr-network
   app:
     container_name: growr-risk-assesor
     restart: always
@@ -13,6 +30,7 @@ services:
       - mongodb
     depends_on:
       - mongodb
+      # - deploy-protocol
     environment:
       WAIT_HOSTS: mongodb:27017
     networks:
@@ -29,3 +47,5 @@ services:
 networks:
   growr-network:
     driver: bridge
+volumes:
+  growr-volume:
